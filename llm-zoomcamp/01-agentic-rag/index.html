@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>01 — Agentic RAG</title>
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <p class="breadcrumb"><a href="../../">Home</a> / <a href="../">LLM Zoomcamp</a></p>
+      <h1>Module 01 — Agentic RAG</h1>
+      <p class="tagline">From a fixed RAG pipeline to an LLM-driven agentic loop</p>
+      <div class="links">
+        <a href="https://github.com/dipikaspatil/LLM_Zoomcamp/tree/main/01_agentic_rag" target="_blank">Code</a>
+        <a href="https://github.com/DataTalksClub/llm-zoomcamp/tree/main/01-agentic-rag" target="_blank">Course Lessons</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="modules">
+      <h2>Key Concepts</h2>
+      <div class="grid">
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>RAG Architecture</h3>
+          <p>Three independent, swappable components: Search → Prompt Builder → LLM. Your model is only as good as your retrieval.</p>
+          <div class="tags"><span>retrieval</span><span>grounding</span><span>hallucination fix</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>Search with minsearch</h3>
+          <p>Lightweight in-memory search. Text fields are ranked by TF-IDF; keyword fields are exact-match filters only.</p>
+          <div class="tags"><span>text_fields</span><span>keyword_fields</span><span>filter_dict</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>Prompt Engineering</h3>
+          <p>Fixed instructions separate from dynamic context. Instructions reduce hallucinations by constraining the LLM to retrieved content.</p>
+          <div class="tags"><span>instructions</span><span>context</span><span>template</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>Chunking</h3>
+          <p>Sliding window splits long pages into overlapping pieces. Overlap ensures passages near boundaries aren't lost.</p>
+          <div class="tags"><span>size=2000</span><span>step=1000</span><span>overlap</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Agentic</span></div>
+          <h3>Function Calling</h3>
+          <p>LLM requests tool execution via JSON schemas. It can retry with reformulated queries — behaviour you didn't explicitly program.</p>
+          <div class="tags"><span>tool schema</span><span>function_call</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Agentic</span></div>
+          <h3>The Agentic Loop</h3>
+          <p>while True: call LLM → if function_call → execute → loop. Stops when the model returns no tool calls. Instructions, tools, and memory are the three pillars.</p>
+          <div class="tags"><span>loop</span><span>memory</span><span>tool dispatch</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Agentic</span></div>
+          <h3>Agent Frameworks</h3>
+          <p>toyaikit auto-generates tool schemas from type hints and docstrings. Same pattern across OpenAI SDK, PydanticAI, LangChain.</p>
+          <div class="tags"><span>toyaikit</span><span>schema generation</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Production</span></div>
+          <h3>Data Ingestion</h3>
+          <p>Separate ingestion from querying. Ingest once to persistent storage; query as often as needed. Avoids re-indexing on every restart.</p>
+          <div class="tags"><span>separation of concerns</span><span>sqlitesearch</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="modules" style="margin-top: 0;">
+      <h2>RAG vs Agentic RAG</h2>
+      <div class="comparison">
+        <div class="compare-box">
+          <h4>Plain RAG</h4>
+          <pre>User Query
+    ↓
+  Search (once, fixed)
+    ↓
+Build Prompt
+    ↓
+   LLM
+    ↓
+  Answer</pre>
+        </div>
+        <div class="compare-box highlight">
+          <h4>Agentic RAG</h4>
+          <pre>User Query
+    ↓
+   LLM ──→ Search
+    ↑          ↓
+  results ←────┘
+    ↓
+Final Answer</pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Built while learning · <a href="https://github.com/DataTalksClub/llm-zoomcamp" target="_blank">LLM Zoomcamp by DataTalks.Club</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
