@@ -3,111 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>02 — Vector Search</title>
-  <link rel="stylesheet" href="../../style.css" />
+  <title>Dipika Patil</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <header>
     <div class="container">
-      <p class="breadcrumb"><a href="../../">Home</a> / <a href="../">LLM Zoomcamp</a></p>
-      <h1>Module 02 — Vector Search</h1>
-      <p class="tagline">From keyword matching to meaning-based retrieval — embeddings, chunking, and hybrid search</p>
+      <h1>Dipika Patil</h1>
+      <p class="tagline">Learning in public — AI & Machine Learning</p>
       <div class="links">
-        <a href="https://github.com/dipikaspatil/LLM_Zoomcamp/tree/main/02_Vector_Search" target="_blank">Code</a>
-        <a href="https://github.com/DataTalksClub/llm-zoomcamp/tree/main/02-vector-search" target="_blank">Course Lessons</a>
+        <a href="https://github.com/dipikaspatil" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/dipikaspatil" target="_blank">LinkedIn</a>
       </div>
     </div>
   </header>
 
   <main class="container">
 
+    <section class="about">
+      <p>Following structured courses to build production-grade AI systems from scratch. Each course has its own progress page with notes, code, and key learnings.</p>
+    </section>
+
     <section class="modules">
-      <h2>Key Concepts</h2>
+      <h2>Courses</h2>
       <div class="grid">
 
         <div class="card done">
-          <div class="card-header"><span class="badge done">Core</span></div>
-          <h3>Embeddings with ONNX</h3>
-          <p>Tokenize → run the ONNX model → mean-pool token vectors → normalize. Same model as sentence-transformers, ~30x lighter install — no PyTorch, no CUDA.</p>
-          <div class="tags"><span>all-MiniLM-L6-v2</span><span>384-dim</span><span>onnxruntime</span></div>
+          <div class="card-header">
+            <span class="badge done">In Progress</span>
+            <span class="module-num">01</span>
+          </div>
+          <h3>LLM Zoomcamp</h3>
+          <p>Building RAG systems, agentic pipelines, and production LLM applications from scratch — 7 modules by DataTalks.Club.</p>
+          <div class="card-links">
+            <a href="llm-zoomcamp/">View Progress →</a>
+          </div>
+          <div class="tags">
+            <span>RAG</span><span>agents</span><span>LLMs</span><span>vector search</span>
+          </div>
         </div>
 
-        <div class="card done">
-          <div class="card-header"><span class="badge done">Core</span></div>
-          <h3>Vector Search with numpy</h3>
-          <p>Normalized vectors mean dot product equals cosine similarity. One matrix-vector multiply (X.dot(v)) scores every document at once.</p>
-          <div class="tags"><span>cosine similarity</span><span>argsort</span><span>top-k</span></div>
+        <div class="card upcoming">
+          <div class="card-header">
+            <span class="badge upcoming">Coming Soon</span>
+            <span class="module-num">02</span>
+          </div>
+          <h3>More courses</h3>
+          <p>More learning journeys to be added here.</p>
         </div>
 
-        <div class="card done">
-          <div class="card-header"><span class="badge done">Core</span></div>
-          <h3>Chunking</h3>
-          <p>A full page mixes many topics, which dilutes its embedding. Splitting into overlapping windows keeps each chunk's vector focused on one idea.</p>
-          <div class="tags"><span>size=2000</span><span>step=1000</span><span>overlap</span></div>
-        </div>
-
-        <div class="card done">
-          <div class="card-header"><span class="badge done">Core</span></div>
-          <h3>minsearch VectorSearch</h3>
-          <p>Same fit/search API as text search, just backed by embeddings instead of an inverted index. filter_dict still works for narrowing by keyword fields.</p>
-          <div class="tags"><span>fit</span><span>search</span><span>filter_dict</span></div>
-        </div>
-
-        <div class="card done">
-          <div class="card-header"><span class="badge done">Tradeoffs</span></div>
-          <h3>Keyword vs Vector Search</h3>
-          <p>Keyword search nails exact terms but misses paraphrases. Vector search matches meaning but can miss code-heavy or rare-term chunks. Neither wins outright.</p>
-          <div class="tags"><span>BM25</span><span>semantic</span><span>recall gaps</span></div>
-        </div>
-
-        <div class="card done">
-          <div class="card-header"><span class="badge done">Production</span></div>
-          <h3>Hybrid Search (RRF)</h3>
-          <p>Reciprocal Rank Fusion merges ranked lists by position, not raw score. A document strong in both searches can beat one that's great in only one.</p>
-          <div class="tags"><span>1/(k+rank)</span><span>k=60</span><span>rank fusion</span></div>
-        </div>
-
-        <div class="card done">
-          <div class="card-header"><span class="badge done">Production</span></div>
-          <h3>sqlitesearch</h3>
-          <p>Persistent vector index backed by SQLite. ANN modes (LSH, IVF, HNSW) trade a little recall for a lot of speed once datasets grow past ~10K vectors.</p>
-          <div class="tags"><span>ANN</span><span>HNSW</span><span>persistent</span></div>
-        </div>
-
-        <div class="card done">
-          <div class="card-header"><span class="badge done">Production</span></div>
-          <h3>PGVector</h3>
-          <p>Postgres + the pgvector extension. Concurrent reads/writes, transactions, and an HNSW index for scale — the production-grade option of the three.</p>
-          <div class="tags"><span>pgvector</span><span>&lt;=&gt; operator</span><span>Docker</span></div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="modules" style="margin-top: 0;">
-      <h2>Single Search vs Hybrid Search</h2>
-      <div class="comparison">
-        <div class="compare-box">
-          <h4>Single method</h4>
-          <pre>     Query
-       ↓
-Vector OR Text Search
-       ↓
-   Ranked List
-       ↓
-  Top Results</pre>
-        </div>
-        <div class="compare-box highlight">
-          <h4>Hybrid (RRF)</h4>
-          <pre>         Query
-        ↙      ↘
-  Vector Search  Text Search
-        ↘      ↙
-      RRF Fusion
-          ↓
-     Top Results</pre>
-        </div>
       </div>
     </section>
 
@@ -115,10 +60,9 @@ Vector OR Text Search
 
   <footer>
     <div class="container">
-      <p>Built while learning · <a href="https://github.com/DataTalksClub/llm-zoomcamp" target="_blank">LLM Zoomcamp by DataTalks.Club</a></p>
+      <p>Learning in public · <a href="https://github.com/dipikaspatil" target="_blank">github.com/dipikaspatil</a></p>
     </div>
   </footer>
 
 </body>
 </html>
-
