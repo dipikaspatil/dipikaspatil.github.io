@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>03 — Orchestration</title>
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <p class="breadcrumb"><a href="../../">Home</a> / <a href="../">LLM Zoomcamp</a></p>
+      <h1>Module 03 — AI Orchestration with Kestra</h1>
+      <p class="tagline">Grounding LLMs in real context, then letting them reason with goals and tools — inside a versioned, observable workflow</p>
+      <div class="links">
+        <a href="https://github.com/dipikaspatil/LLM_Zoomcamp/tree/main/03_Orchestration" target="_blank">Code</a>
+        <a href="https://github.com/DataTalksClub/llm-zoomcamp/tree/main/03-orchestration" target="_blank">Course Lessons</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="modules">
+      <h2>Key Concepts</h2>
+      <div class="grid">
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>Context Engineering</h3>
+          <p>Generic AI assistants hallucinate outdated syntax or invented plugin properties because they're frozen at a training cutoff. Supplying current docs before generation is what makes output trustworthy.</p>
+          <div class="tags"><span>hallucination</span><span>plugin docs</span><span>grounding</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>AI Copilot</h3>
+          <p>Generates flow scaffolding from natural language, grounded in the plugin docs for your installed Kestra version. The "5% Rule": Copilot handles the structure, you tweak credentials and edge cases.</p>
+          <div class="tags"><span>5% rule</span><span>natural language</span><span>iterative refinement</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>RAG — Static & Web Search</h3>
+          <p>Two-phase grounding: ingest documents into embeddings once (KV Store), or retrieve live web results at query time (Tavily). Either way, the LLM answers from real content instead of memorized guesses.</p>
+          <div class="tags"><span>IngestDocument</span><span>KestraKVStore</span><span>TavilyWebSearch</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>Agents</h3>
+          <p>AIAgent runs an agentic loop: call the LLM → execute any requested tool → feed results back → repeat until done. You specify the goal; the agent decides how — including when to stop.</p>
+          <div class="tags"><span>AIAgent</span><span>agentic loop</span><span>tool use</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Advanced</span></div>
+          <h3>Multi-Agent Systems</h3>
+          <p>One agent treats another AIAgent as a tool. An analyst delegates web research to a specialist agent, keeping each agent's responsibility narrow and easier to debug.</p>
+          <div class="tags"><span>AIAgent as tool</span><span>delegation</span><span>separation of concerns</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Production</span></div>
+          <h3>Best Practices</h3>
+          <p>Deterministic, repeatable workflows still win for compliance-critical steps — agents are for genuinely dynamic decisions. Track token cost, inject keys via secret(), rotate every ~90 days.</p>
+          <div class="tags"><span>determinism</span><span>secret()</span><span>token cost</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="modules" style="margin-top: 0;">
+      <h2>Single Agent vs Multi-Agent</h2>
+      <div class="comparison">
+        <div class="compare-box">
+          <h4>Single Agent</h4>
+          <pre>   Goal
+    ↓
+   LLM ──→ Tool
+    ↑        ↓
+ results ←───┘
+    ↓
+  Answer</pre>
+        </div>
+        <div class="compare-box highlight">
+          <h4>Multi-Agent</h4>
+          <pre>       Goal
+        ↓
+  Analyst Agent
+    ↓        ↑
+  delegates  synthesizes
+    ↓        ↑
+ Research Agent (tool)
+    ↓
+Structured Report</pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Built while learning · <a href="https://github.com/DataTalksClub/llm-zoomcamp" target="_blank">LLM Zoomcamp by DataTalks.Club</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
