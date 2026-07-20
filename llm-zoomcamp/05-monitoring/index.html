@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>05 — Monitoring</title>
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <p class="breadcrumb"><a href="../../">Home</a> / <a href="../">LLM Zoomcamp</a></p>
+      <h1>Module 05 — Monitoring</h1>
+      <p class="tagline">Replacing "hope it's fast and cheap" with traces, span attributes, and queryable telemetry — because offline evaluation goes silent the moment real users show up</p>
+      <div class="links">
+        <a href="https://github.com/dipikaspatil/LLM_Zoomcamp/tree/main/05_monitoring" target="_blank">Code</a>
+        <a href="https://github.com/DataTalksClub/llm-zoomcamp/tree/main/05-monitoring" target="_blank">Course Lessons</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="modules">
+      <h2>Key Concepts</h2>
+      <div class="grid">
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>Offline Evaluation vs. Online Monitoring</h3>
+          <p>Hit Rate, MRR, and an LLM judge against ground truth all work because there's a fixed, known-answer test set. That stops the moment a real user asks a real question — monitoring is what replaces it: capture, store, visualize, act, repeat.</p>
+          <div class="tags"><span>online evaluation</span><span>production feedback loop</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>Instrumenting the RAG Pipeline</h3>
+          <p>Subclassed the RAG pipeline instead of rewriting it, overriding just the LLM-calling method to capture latency, prompt/completion tokens, and cost into a dataclass on every call — the pipeline's own logic never changes.</p>
+          <div class="tags"><span>LLMCallRecord</span><span>dataclass</span><span>subclassing</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Core</span></div>
+          <h3>Two Feedback Signals, One Table</h3>
+          <p>Thumbs up/down from real users and relevance labels from an LLM judge land in the same feedback table, distinguished by a source column. Comparing what the judge thinks against what people think is how you'd align the judge over time.</p>
+          <div class="tags"><span>user feedback</span><span>LLM-as-judge</span><span>online relevance</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Advanced</span></div>
+          <h3>OpenTelemetry Traces &amp; Spans</h3>
+          <p>Wrapped rag(), search(), and llm() each in their own span using OTel — one call becomes a small tree instead of a black box, with search and llm as automatic children of rag simply by being called inside its open span.</p>
+          <div class="tags"><span>traces</span><span>spans</span><span>span attributes</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Advanced</span></div>
+          <h3>Custom Exporter → SQLite</h3>
+          <p>Swapping ConsoleSpanExporter for a hand-written SQLiteSpanExporter changed nothing about which spans get created — only where they land. The instrumentation code never needs to know or care about its destination.</p>
+          <div class="tags"><span>SpanExporter</span><span>SQLite</span><span>SQL analysis</span></div>
+        </div>
+
+        <div class="card done">
+          <div class="card-header"><span class="badge done">Production</span></div>
+          <h3>Sampling at Scale</h3>
+          <p>The homework stores and judges every single call — fine for learning, not for production. At real volume, teams sample instead of scoring 100% of traffic and move capture off the request path into an async queue.</p>
+          <div class="tags"><span>sampling</span><span>async capture</span><span>cost-aware monitoring</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="modules" style="margin-top: 0;">
+      <h2>Where Does Time Actually Go in a RAG Call?</h2>
+      <div class="comparison">
+        <div class="compare-box highlight">
+          <h4>search span</h4>
+          <pre>duration ≈ 0.8 ms
+
+In-memory keyword lookup
+No network call</pre>
+        </div>
+        <div class="compare-box">
+          <h4>llm span</h4>
+          <pre>duration ≈ 3934 ms
+
+OpenAI network round trip
+≈ 2,000× the search span</pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Built while learning · <a href="https://github.com/DataTalksClub/llm-zoomcamp" target="_blank">LLM Zoomcamp by DataTalks.Club</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
